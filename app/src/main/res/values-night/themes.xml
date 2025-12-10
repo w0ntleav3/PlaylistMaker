@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.PlaylistMaker" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorText">@color/colorText</item>          <!-- светлый текст -->
+        <item name="colorTextSecondary">@color/colorTextSecondary</item>
+        <item name="colorBackgroundMain">@color/colorBackgroundMain</item>  <!-- темный фон -->
+        <item name="colorButtonText">@color/colorWhite</item>  <!-- текст на кнопках -->
+    </style>
+</resources>

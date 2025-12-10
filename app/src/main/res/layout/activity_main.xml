@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorBackgroundMain"
+    android:fontFamily="@font/yandexsanstext_medium"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/side_margin"
+    android:paddingTop="@dimen/side_margin"
+    android:paddingEnd="@dimen/side_margin"
+    android:paddingBottom="@dimen/side_margin">
+
+    <TextView
+        android:id="@+id/app_title"
+        style="@style/Text.Header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="@string/app_name" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_search"
+        style="@style/MainButtonStyle"
+        android:layout_marginTop="@dimen/button_margin_top"
+        android:layout_marginBottom="@dimen/button_margin_between"
+        android:text="@string/btn_search"
+
+        app:icon="@drawable/ic_vector" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_library"
+        style="@style/MainButtonStyle"
+        android:layout_marginBottom="@dimen/button_margin_between"
+        android:text="@string/btn_library"
+
+        app:icon="@drawable/ic_media"
+        />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_settings"
+        style="@style/MainButtonStyle"
+        android:layout_marginBottom="@dimen/button_margin_between"
+        android:text="@string/settings_word"
+
+        app:icon="@drawable/ic_set" />
+</LinearLayout>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBackground">
+
+    <!-- Верхний бар -->
+    <LinearLayout
+        android:id="@+id/settings_root"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/header_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/colorBackground"
+        android:paddingStart="@dimen/side_margin"
+        android:paddingEnd="@dimen/side_margin">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="@dimen/back_button_size"
+            android:layout_height="@dimen/back_button_size"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back"
+            app:tint="@color/colorText" />
+
+        <TextView
+            style="@style/Text.Medium"
+            android:id="@+id/settings_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_word"
+            android:textSize="@dimen/title_text_size"
+            android:textColor="@color/colorText"
+            android:layout_marginStart="@dimen/title_margin_start"/>
+    </LinearLayout>
+
+    <!-- Основные пункты -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/colorBackground"
+        android:paddingStart="@dimen/side_margin"
+        android:paddingEnd="@dimen/side_margin"
+        android:paddingTop="@dimen/side_margin"
+        android:paddingBottom="@dimen/side_margin">
+
+        <!-- Тема -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/menu_item_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/padding_item_horizontal"
+            android:paddingEnd="@dimen/padding_item_horizontal">
+
+            <TextView
+                style="@style/Text.Settings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dark_mode"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <Switch
+                android:id="@+id/switch_dark_mode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumbTint="@color/switch_thumb_color"
+                android:trackTint="@color/switch_track_color"/>
+        </LinearLayout>
+
+        <!-- Поделиться -->
+        <LinearLayout
+            android:id="@+id/btn_share"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/menu_item_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/padding_item_horizontal"
+            android:paddingEnd="@dimen/padding_item_horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                style="@style/Text.Settings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/share"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <ImageView
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_share"
+                app:tint="@color/colorTextSecondary" />
+        </LinearLayout>
+
+        <!-- Поддержка -->
+        <LinearLayout
+            android:id="@+id/btn_support"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/menu_item_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/padding_item_horizontal"
+            android:paddingEnd="@dimen/padding_item_horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                style="@style/Text.Settings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/support"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <ImageView
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_sup"
+                app:tint="@color/colorTextSecondary" />
+        </LinearLayout>
+
+        <!-- Пользовательское соглашение -->
+        <LinearLayout
+            android:id="@+id/btn_agreement"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/menu_item_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/padding_item_horizontal"
+            android:paddingEnd="@dimen/padding_item_horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                style="@style/Text.Settings"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/user_a"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_size_16sp" />
+
+            <ImageView
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:src="@drawable/ic_arrow1"
+                app:tint="@color/colorTextSecondary" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
