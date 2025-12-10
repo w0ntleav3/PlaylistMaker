@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatDelegate
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        // ставим тему перед super.onCreate
+
         val prefs = getSharedPreferences("settings", MODE_PRIVATE)
         val isNight = prefs.getBoolean("night_mode", false)
         AppCompatDelegate.setDefaultNightMode(
@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.btn_search).setOnClickListener {
             startActivity(Intent(this, SearchActivity::class.java))
+        }
+
+        findViewById<View>(R.id.btn_library).setOnClickListener {
+            startActivity(Intent(this, MediaActivity::class.java))
         }
 
     }

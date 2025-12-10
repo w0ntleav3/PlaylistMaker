@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorBackgroundMain"
+    android:fontFamily="@font/yandexsanstext_medium"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/side_margin"
+    android:paddingTop="@dimen/padding_top_standart"
+    android:paddingEnd="@dimen/side_margin"
+    android:paddingBottom="@dimen/side_margin"
+    >
+
+    <ImageButton
+        android:id="@+id/btn_back_from_media"
+        android:layout_width="@dimen/back_button_size"
+        android:layout_height="@dimen/back_button_size"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_back"
+        app:tint="@color/colorText" />
+</LinearLayout>

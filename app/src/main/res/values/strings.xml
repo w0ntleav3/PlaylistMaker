@@ -20,5 +20,9 @@
     <string name="clear_history">Очистить историю</string>
     <string name="title_history">Вы искали</string>
 
+    <string name="refresh">Обновить</string>
+    <string name="no_result">Ничего не нашлось</string>
+    <string name="server_error">Ошибка сервера</string>
+
 
 </resources>

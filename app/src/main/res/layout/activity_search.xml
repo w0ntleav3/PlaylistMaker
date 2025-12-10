@@ -38,8 +38,8 @@
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/side_margin"
         android:paddingEnd="@dimen/side_margin"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
+        android:paddingTop="@dimen/padding_item_vertical"
+        android:paddingBottom="@dimen/padding_item_vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -125,6 +125,53 @@
             android:textColor="@color/clear_history_text"/>
 
     </LinearLayout>
+    <!-- плейсхолдер -->
+    <FrameLayout
+        android:id="@+id/placeholderContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="@dimen/padding_history"
+        android:visibility="gone"
+        android:gravity="center">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/placeholderImage"
+                android:layout_width="@dimen/image_history_result"
+                android:layout_height="@dimen/image_history_result"
+                android:layout_gravity="center"
+                android:src="@drawable/placeholder_no_music"
+                app:tint="@color/colorText" />
+
+            <TextView
+                android:id="@+id/placeholderText"
+                style="@style/Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ничего не нашлось"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_size_16sp"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/padding_item_horizontal"
+                android:lineSpacingExtra="8dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/refreshButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/refresh"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </FrameLayout>
+
 
 
 

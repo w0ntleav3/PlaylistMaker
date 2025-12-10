@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.playlistmaker.utils.formatTrackTime
 
 class HistoryAdapter(
     private var items: MutableList<Track>
@@ -24,7 +25,7 @@ class HistoryAdapter(
         fun bind(track: Track) {
             trackName.text = track.trackName
             artistName.text = track.artistName
-            trackTime.text = track.trackTime
+            trackTime.text = formatTrackTime(track.trackTimeMillis)
             Glide.with(itemView).load(track.artworkUrl100)
                 .placeholder(R.drawable.placeholder_image)
                 .error(R.drawable.placeholder_image)
@@ -45,13 +46,13 @@ class HistoryAdapter(
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         holder.bind(items[position])
 
-        // добавляем клик на элемент
+
         holder.itemView.setOnClickListener {
             onItemClick?.invoke(items[position])
         }
     }
 
-    // твой метод update
+
     fun update(newList: List<Track>) {
         items.clear()
         items.addAll(newList)

@@ -50,4 +50,7 @@
     <dimen name="track_author_duration">12sp</dimen>
     <dimen name="title_history">20sp</dimen>
 
+    <dimen name="image_history_result">120dp</dimen>
+
+
 </resources>

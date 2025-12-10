@@ -13,7 +13,7 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // выбираем тему из SharedPreferences
+        // выбираем тему
         val prefs = getSharedPreferences("settings", MODE_PRIVATE)
         val isNight = prefs.getBoolean("night_mode", false)
         if (isNight) {
@@ -61,7 +61,7 @@ class SettingsActivity : AppCompatActivity() {
                 if (isChecked) AppCompatDelegate.MODE_NIGHT_YES
                 else AppCompatDelegate.MODE_NIGHT_NO
             )
-            // пересоздать текущую активити, чтобы тема сразу обновилась
+            // пересоздать текущую активити
             recreate()
         }
 
