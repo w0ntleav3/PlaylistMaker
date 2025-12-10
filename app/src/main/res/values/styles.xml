@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- общий стиль текста (базовый) -->
+    <!-- общий стиль текста  -->
     <style name="Text" parent="@android:style/TextAppearance">
         <item name="android:fontFamily">@font/yandexsanstext_medium</item>
         <item name="android:textColor">?attr/colorText</item>
@@ -15,20 +15,20 @@
         <item name="android:textColor">@color/colorWhite</item>
     </style>
 
-    <!-- search bar text -->
+    <!-- search bar -->
     <style name="Text.SearchBar" parent="Text">
         <item name="android:textColor">@color/colorTextSearchBar</item>
         <item name="android:fontFamily">@font/yandexsanstext_regular</item>
     </style>
 
-    <!-- settings / general small text -->
+    <!-- settings , general small text -->
     <style name="Text.Settings" parent="Text">
         <item name="android:fontFamily">@font/yandexsanstext_regular</item>
         <item name="android:textSize">@dimen/text_size_16sp</item>
         <item name="android:textColor">?attr/colorText</item>
     </style>
 
-    <!-- edittext in search -->
+    <!-- edittext  -->
     <style name="AppEditText" parent="Widget.MaterialComponents.TextInputEditText.FilledBox">
         <item name="android:textColor">@color/colorButtonTextMain</item>
         <item name="android:textColorHint">@color/colorTextSearchBar</item>
@@ -69,4 +69,13 @@
         <item name="android:textSize">@dimen/track_author_duration</item>
         <item name="android:textColor">?attr/colorTextSecondary</item>
     </style>
+
+    <style name="Text.TitleHistory" parent="Text">
+        <item name="android:fontFamily">@font/yandexsanstext_medium</item>
+        <item name="android:textSize">@dimen/title_history</item>
+        <item name="android:textColor">?attr/colorText</item>
+
+    </style>
+
+
 </resources>

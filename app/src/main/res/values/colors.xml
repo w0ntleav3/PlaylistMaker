@@ -15,4 +15,6 @@
 
     <color name="switch_thumb_color">#FFFFFF</color>
     <color name="switch_track_color">#3772E7</color>
+
+    <color name="clear_history_text">#FFFFFF</color>
 </resources>

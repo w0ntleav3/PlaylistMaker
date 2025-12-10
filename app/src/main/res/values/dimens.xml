@@ -2,11 +2,13 @@
 <resources>
     <!-- margins / paddings -->
     <dimen name="side_margin">16dp</dimen>
+    <dimen name="padding_top_standart">20dp</dimen>
     <dimen name="padding_item_horizontal">16dp</dimen>
     <dimen name="padding_item_vertical">8dp</dimen>
     <dimen name="margin_12dp">12dp</dimen>
     <dimen name="margin_8dp">8dp</dimen>
     <dimen name="margin_2dp">2dp</dimen>
+    <dimen name="padding_history">50dp</dimen>
 
     <!-- header -->
     <dimen name="header_height">48dp</dimen>
@@ -19,9 +21,13 @@
     <dimen name="button_icon_padding">8dp</dimen>
     <dimen name="button_text_size">22sp</dimen>
 
+
+    <dimen name="button_corner_radius_history">20dp</dimen>
+
+
     <!-- search bar -->
     <dimen name="search_bar_height">40dp</dimen>
-    <dimen name="search_bar_icon">18dp</dimen>
+    <dimen name="search_bar_icon">16dp</dimen>
     <dimen name="search_bar_padding">40dp</dimen>
     <dimen name="search_corner_radius">12dp</dimen>
 
@@ -42,4 +48,6 @@
     <dimen name="text_size_16sp">16sp</dimen>
     <dimen name="track_name">16sp</dimen>
     <dimen name="track_author_duration">12sp</dimen>
+    <dimen name="title_history">20sp</dimen>
+
 </resources>

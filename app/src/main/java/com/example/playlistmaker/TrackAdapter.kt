@@ -5,12 +5,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.playlistmaker.Track
 import com.example.playlistmaker.R
+import com.example.playlistmaker.Track
 
-
-class TrackAdapter(private val tracks: List<Track>) :
+class TrackAdapter(private val tracks: MutableList<Track>) :
     RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
+
+    var onItemClick: ((Track) -> Unit)? = null
 
     class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val artwork: ImageView = itemView.findViewById(R.id.trackArtwork)
@@ -31,6 +32,12 @@ class TrackAdapter(private val tracks: List<Track>) :
         }
     }
 
+    fun update(newList: List<Track>) {
+        tracks.clear()
+        tracks.addAll(newList)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_track, parent, false)
@@ -39,6 +46,9 @@ class TrackAdapter(private val tracks: List<Track>) :
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         holder.bind(tracks[position])
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(tracks[position])
+        }
     }
 
     override fun getItemCount(): Int = tracks.size

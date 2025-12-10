@@ -17,5 +17,8 @@
 
     <string name="search_word">Поиск</string>
 
+    <string name="clear_history">Очистить историю</string>
+    <string name="title_history">Вы искали</string>
+
 
 </resources>
