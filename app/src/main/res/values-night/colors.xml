@@ -1,16 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorBackgroundMain">#1A1B22</color>
     <color name="colorBackground">#1A1B22</color>
-    <color name="colorPrimary">#FFFFFF</color>
     <color name="colorBackgroundSecondary">#FFFFFF</color>
+    <color name="colorPrimary">#FFFFFF</color>
     <color name="colorButtonTextMain">#1A1B22</color>
 
     <color name="colorText">#FFFFFF</color>
     <color name="colorTextSecondary">#FFFFFF</color>
     <color name="colorTextSearchBar">#1A1B22</color>
+
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
 
-    <color name="switch_thumb_color">#3772E7</color> <!-- ночью синий -->
+    <color name="switch_thumb_color">#3772E7</color>
     <color name="switch_track_color">#3772E7</color>
 </resources>

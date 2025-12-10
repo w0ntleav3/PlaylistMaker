@@ -1,18 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-
     <style name="Base.Theme.PlaylistMaker" parent="Theme.Material3.DayNight.NoActionBar">
-
+        <!-- цвета, которые будем использовать через ?attr/ -->
         <item name="colorBackground">@color/colorBackground</item>
         <item name="colorBackgroundMain">@color/colorBackgroundMain</item>
         <item name="android:windowBackground">@color/colorBackground</item>
         <item name="colorSurface">@color/colorBackground</item>
-        <item name="surfaceContainer">@color/colorBackground</item>
-        <item name="backgroundColor">@color/colorBackground</item>
 
         <item name="colorText">@color/colorText</item>
         <item name="colorTextSecondary">@color/colorTextSecondary</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-
+        <item name="colorButtonText">@color/colorButtonTextMain</item>
     </style>
 
     <style name="Theme.PlaylistMaker" parent="Base.Theme.PlaylistMaker" />

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorBackgroundMain">#3772E7</color>
     <color name="colorBackground">#FFFFFF</color>
@@ -5,10 +6,10 @@
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorButtonTextMain">#1A1B22</color>
 
-
     <color name="colorText">#1A1B22</color>
     <color name="colorTextSecondary">#AEAFB4</color>
     <color name="colorTextSearchBar">#AEAFB4</color>
+
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
 

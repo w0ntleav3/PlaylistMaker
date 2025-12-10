@@ -28,7 +28,8 @@
             android:layout_height="wrap_content"
             android:text="@string/search_word"
             android:textColor="@color/colorText"
-            android:layout_marginStart="@dimen/title_margin_start"/>
+            android:layout_marginStart="@dimen/margin_12dp"/>
+
     </LinearLayout>
 
     <FrameLayout
@@ -70,8 +71,8 @@
 
             <ImageView
                 android:id="@+id/clearButton"
-                android:layout_width="@dimen/clear_button_size"
-                android:layout_height="@dimen/clear_button_size"
+                android:layout_width="@dimen/icon_size_secondary"
+                android:layout_height="@dimen/icon_size_secondary"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_clear"

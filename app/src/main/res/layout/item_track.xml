@@ -6,23 +6,21 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingStart="@dimen/padding_item_horizontal"
-    android:paddingEnd="8dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
+    android:paddingEnd="@dimen/padding_item_horizontal"
+    android:paddingTop="@dimen/padding_item_vertical"
+    android:paddingBottom="@dimen/padding_item_vertical"
     android:gravity="center_vertical"
     android:background="?attr/selectableItemBackground">
 
-    <!-- Картинка -->
     <ImageView
         android:id="@+id/trackArtwork"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/list_item_image"
+        android:layout_height="@dimen/list_item_image"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:src="@drawable/placeholder"
-        android:background="@drawable/rounded_placeholder"/>
+        android:background="@drawable/rounded_placeholder" />
 
-    <!-- Текстовая часть -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -32,7 +30,6 @@
         android:paddingEnd="@dimen/margin_8dp"
         android:gravity="center_vertical">
 
-        <!-- Название трека -->
         <TextView
             android:id="@+id/trackName"
             style="@style/Text.TrackName"
@@ -42,12 +39,11 @@
             android:singleLine="true"
             tools:text="Название песни" />
 
-        <!-- Исполнитель + длительность -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="2dp">
+            android:layout_marginTop="@dimen/margin_2dp">
 
             <TextView
                 android:id="@+id/artistName"
@@ -56,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:maxWidth="200dp"
+                android:maxWidth="@dimen/artist_max_width"
                 tools:text="Исполнитель" />
 
             <TextView
@@ -74,11 +70,10 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Стрелочка -->
     <ImageView
         android:id="@+id/arrowRight"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/icon_size_secondary"
+        android:layout_height="@dimen/icon_size_secondary"
         android:src="@drawable/ic_chevron_right"
         app:tint="@color/colorTextSecondary" />
 </LinearLayout>
