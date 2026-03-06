@@ -28,7 +28,7 @@ class TrackAdapter(private val tracks: MutableList<Track>) :
 
             Glide.with(itemView)
                 .load(track.artworkUrl100)
-                .placeholder(R.drawable.placeholder_image)
+                .placeholder(R.drawable.placeholder_player)
                 .centerCrop()
                 .into(artwork)
         }

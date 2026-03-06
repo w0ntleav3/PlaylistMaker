@@ -77,5 +77,18 @@
 
     </style>
 
+    <style name="Text.PlayerValue" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/colorBlackWhite</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:letterSpacing">0.05</item> <item name="android:fontFamily">@font/yandexsanstext_regular</item>
+    </style>
+
+    <style name="Text.PlayerLabel" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">#9F9F9F</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:fontFamily">@font/yandexsanstext_regular</item>
+    </style>
+
 
 </resources>

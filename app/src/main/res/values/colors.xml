@@ -12,9 +12,19 @@
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorBlackWhite">#000000</color>
+
 
     <color name="switch_thumb_color">#FFFFFF</color>
     <color name="switch_track_color">#3772E7</color>
 
     <color name="clear_history_text">#FFFFFF</color>
+
+    <color name="colorRoundButtonBack">#1A1B22</color>
+    <color name="colorRoundButtonIcon">#FFFFFF</color>
+
+
+    <color name="colorGrey">#C5C6C8</color>
+
+
 </resources>

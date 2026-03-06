@@ -51,6 +51,32 @@
     <dimen name="title_history">20sp</dimen>
 
     <dimen name="image_history_result">120dp</dimen>
+    <dimen name="album_cover_radius_large">100</dimen>
+
+
+    <!-- player -->
+    <dimen name="player_padding_bottom">24dp</dimen>
+    <dimen name="player_guideline_side">24dp</dimen>
+    <dimen name="player_back_button_margin_top">16dp</dimen>
+    <dimen name="player_cover_margin_top">24dp</dimen>
+
+    <dimen name="player_track_name_margin_top">32dp</dimen>
+    <dimen name="player_track_name_size">22sp</dimen>
+
+    <dimen name="player_artist_name_margin_top">12dp</dimen>
+    <dimen name="player_artist_name_size">14sp</dimen>
+
+    <dimen name="player_play_button_size">100dp</dimen>
+    <dimen name="player_play_button_margin_top">30dp</dimen>
+    <dimen name="player_side_button_size">51dp</dimen>
+
+    <dimen name="player_progress_margin_top">12dp</dimen>
+    <dimen name="player_progress_text_size">14sp</dimen>
+
+    <dimen name="player_info_margin_top_first">32dp</dimen>
+    <dimen name="player_info_margin_top_next">12dp</dimen>
+    <dimen name="player_info_label_size">13sp</dimen>
+    <dimen name="player_info_value_spacing">16dp</dimen>
 
 
 </resources>

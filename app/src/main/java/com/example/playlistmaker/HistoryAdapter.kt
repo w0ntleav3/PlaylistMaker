@@ -27,8 +27,8 @@ class HistoryAdapter(
             artistName.text = track.artistName
             trackTime.text = formatTrackTime(track.trackTimeMillis)
             Glide.with(itemView).load(track.artworkUrl100)
-                .placeholder(R.drawable.placeholder_image)
-                .error(R.drawable.placeholder_image)
+                .placeholder(R.drawable.placeholder_player)
+                .error(R.drawable.placeholder_player)
                 .centerCrop()
                 .transform(RoundedCorners(12))
                 .into(artwork)

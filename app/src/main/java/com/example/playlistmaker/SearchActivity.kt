@@ -1,13 +1,17 @@
 package com.example.playlistmaker
 
 import TrackAdapter
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.playlistmaker.network.ITunesApi
 import com.example.playlistmaker.utils.formatTrackTime
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -85,6 +90,8 @@ class SearchActivity : AppCompatActivity() {
         historyTitle = findViewById(R.id.historyTitle)
         clearHistoryButton = findViewById(R.id.clearHistoryBtn)
 
+        progressBar = findViewById(R.id.progressBar)
+
         // плейсхолдеры
         placeholderContainer = findViewById(R.id.placeholderContainer)
         placeholderImage = findViewById(R.id.placeholderImage)
@@ -93,6 +100,8 @@ class SearchActivity : AppCompatActivity() {
 
         clearBtn.visibility = View.GONE
         placeholderContainer.visibility = View.GONE
+
+
     }
 
     private fun setupTrackRecycler() {
@@ -103,6 +112,7 @@ class SearchActivity : AppCompatActivity() {
         trackAdapter.onItemClick = { track ->
             historyStorage.addTrack(track)
             updateHistoryVisibility()
+            openPlayer(track) // вызываем общую функцию
         }
     }
 
@@ -112,6 +122,10 @@ class SearchActivity : AppCompatActivity() {
         historyRecycler.adapter = historyAdapter
 
         historyAdapter.onItemClick = { track ->
+            // при клике на историю тоже открываем плеер
+            openPlayer(track)
+
+            // и обновляем положение трека в истории (по желанию)
             historyStorage.addTrack(track)
             historyAdapter.update(historyStorage.getHistory())
         }
@@ -226,6 +240,24 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    private fun openPlayer(track: Track) {
+        val intent = Intent(this, PlayerActivity::class.java)
+        val json = Gson().toJson(track)
+        intent.putExtra("track", json)
+        startActivity(intent)
+    }
+
+    private lateinit var progressBar: ProgressBar
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val searchRunnable = Runnable { performSearch(searchEdit.text.toString()) }
+
+    private var isClickAllowed = true // для debounce клика
+
+    companion object {
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+    }
 
 
 }
