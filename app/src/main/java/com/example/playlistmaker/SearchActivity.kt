@@ -51,6 +51,18 @@ class SearchActivity : AppCompatActivity() {
     private var searchText = ""
     private var lastQuery: String? = null
 
+    private lateinit var progressBar: ProgressBar
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val searchRunnable = Runnable { performSearch(searchEdit.text.toString()) }
+
+    private var isClickAllowed = true // для debounce клика
+
+    companion object {
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+        private const val CLICK_DEBOUNCE_DELAY = 1000L
+    }
+
     private val iTunesApi by lazy {
         Retrofit.Builder()
             .baseUrl("https://itunes.apple.com")
@@ -110,9 +122,11 @@ class SearchActivity : AppCompatActivity() {
         recyclerView.adapter = trackAdapter
 
         trackAdapter.onItemClick = { track ->
-            historyStorage.addTrack(track)
-            updateHistoryVisibility()
-            openPlayer(track) // вызываем общую функцию
+            if (clickDebounce()) { // проверяем, можно ли кликать
+                historyStorage.addTrack(track)
+                updateHistoryVisibility()
+                openPlayer(track)
+            }
         }
     }
 
@@ -122,12 +136,11 @@ class SearchActivity : AppCompatActivity() {
         historyRecycler.adapter = historyAdapter
 
         historyAdapter.onItemClick = { track ->
-            // при клике на историю тоже открываем плеер
-            openPlayer(track)
-
-            // и обновляем положение трека в истории (по желанию)
-            historyStorage.addTrack(track)
-            historyAdapter.update(historyStorage.getHistory())
+            if (clickDebounce()) { // добавляем проверку и сюда
+                openPlayer(track)
+                historyStorage.addTrack(track)
+                historyAdapter.update(historyStorage.getHistory())
+            }
         }
 
         clearHistoryButton.setOnClickListener {
@@ -159,7 +172,15 @@ class SearchActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 searchText = s.toString()
                 clearBtn.visibility = if (searchText.isEmpty()) View.GONE else View.VISIBLE
-                if (searchText.isEmpty()) updateHistoryVisibility()
+
+                if (searchText.isNotEmpty()) {
+                    searchDebounce() // запуск автопоиска
+                }
+
+                if (searchText.isEmpty()) {
+                    handler.removeCallbacks(searchRunnable) // отменяем поиск, если стерли текст
+                    updateHistoryVisibility()
+                }
             }
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -188,29 +209,30 @@ class SearchActivity : AppCompatActivity() {
     private fun performSearch(query: String) {
         if (query.isBlank()) return
 
-        // прячем все кроме плейсхолдера
+        // Показываем прогресс бар, прячем всё остальное
         recyclerView.visibility = View.GONE
         historyContainer.visibility = View.GONE
         placeholderContainer.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
 
         lifecycleScope.launch {
             try {
                 val response = iTunesApi.searchTracks(query)
+                progressBar.visibility = View.GONE // Прячем загрузку
+
                 if (response.isSuccessful) {
                     val tracks = response.body()?.results ?: emptyList()
                     if (tracks.isEmpty()) {
                         showEmptyPlaceholder()
                     } else {
-                        trackAdapter.update(tracks.map { track ->
-                            track.copy(trackTimeMillis = track.trackTimeMillis)
-                        })
+                        trackAdapter.update(tracks)
                         recyclerView.visibility = View.VISIBLE
-                        placeholderContainer.visibility = View.GONE
                     }
                 } else {
                     showErrorPlaceholder()
                 }
             } catch (e: Exception) {
+                progressBar.visibility = View.GONE
                 showErrorPlaceholder()
             }
         }
@@ -247,17 +269,25 @@ class SearchActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private lateinit var progressBar: ProgressBar
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val searchRunnable = Runnable { performSearch(searchEdit.text.toString()) }
 
-    private var isClickAllowed = true // для debounce клика
-
-    companion object {
-        private const val SEARCH_DEBOUNCE_DELAY = 2000L
-        private const val CLICK_DEBOUNCE_DELAY = 1000L
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
     }
 
+    private fun clickDebounce(): Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(searchRunnable)
+    }
 
 }
