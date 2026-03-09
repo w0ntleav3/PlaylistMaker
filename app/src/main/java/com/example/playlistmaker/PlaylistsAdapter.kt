@@ -3,32 +3,45 @@ package com.example.playlistmaker
 import Playlist
 import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.databinding.ItemPlaylistBinding
 import java.io.File
 
 class PlaylistsAdapter(
     private val playlists: MutableList<Playlist>,
+    private val isGridView: Boolean = true,
     private val onClick: (Playlist) -> Unit
 ) : RecyclerView.Adapter<PlaylistsAdapter.PlaylistViewHolder>() {
 
-    inner class PlaylistViewHolder(
-        private val binding: ItemPlaylistBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder {
+        val layout = if (isGridView) R.layout.item_playlist else R.layout.item_playlist_small
+        val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
+        return PlaylistViewHolder(view)
+    }
+
+    inner class PlaylistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        private val playlistImage: ImageView = view.findViewById(R.id.playlist_image)
+        private val playlistName: TextView = view.findViewById(R.id.playlist_name)
+        private val tracksCount: TextView = view.findViewById(R.id.tracks_count)
 
         fun bind(playlist: Playlist) {
-            binding.playlistName.text = playlist.name
-            binding.tracksCount.text = formatTracksCount(playlist.tracksCount)
+            playlistName.text = playlist.name
+            tracksCount.text = formatTracksCount(playlist.tracksCount)
 
-            binding.root.setOnClickListener {
+            itemView.setOnClickListener {
                 onClick(playlist)
             }
 
             if (playlist.imagePath.isNullOrEmpty()) {
-                binding.playlistImage.setImageResource(R.drawable.placeholder_player)
+                playlistImage.setImageResource(R.drawable.placeholder_player)
             } else {
-                binding.playlistImage.setImageURI(Uri.fromFile(File(playlist.imagePath)))
+
+                playlistImage.setImageURI(Uri.fromFile(File(playlist.imagePath)))
             }
         }
 
@@ -51,10 +64,6 @@ class PlaylistsAdapter(
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder {
-        val binding = ItemPlaylistBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PlaylistViewHolder(binding)
-    }
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
         holder.bind(playlists[position])

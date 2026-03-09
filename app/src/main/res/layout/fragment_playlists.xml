@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Новый плейлист"
+        android:text="@string/new_playlist"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,16 +35,15 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/placeholder_margin_top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_new_playlist">
-
-        <ImageView
-            android:layout_width="@dimen/placeholder_image_size"
-            android:layout_height="@dimen/placeholder_image_size"
-            android:src="@drawable/placeholder_no_music"
-            app:tint="@color/colorBlackWhite" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"> <ImageView
+        android:layout_width="@dimen/placeholder_image_size"
+        android:layout_height="@dimen/placeholder_image_size"
+        android:src="@drawable/placeholder_no_music"
+        app:tint="@color/colorBlackWhite" />
 
         <TextView
             style="@style/Text.Medium"

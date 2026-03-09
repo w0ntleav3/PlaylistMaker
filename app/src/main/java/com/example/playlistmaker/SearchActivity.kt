@@ -42,7 +42,6 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var historyStorage: SearchHistoryStorage
 
-    // плейсхолдеры
     private lateinit var placeholderContainer: View
     private lateinit var placeholderImage: ImageView
     private lateinit var placeholderText: TextView
@@ -56,7 +55,7 @@ class SearchActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private val searchRunnable = Runnable { performSearch(searchEdit.text.toString()) }
 
-    private var isClickAllowed = true // для debounce клика
+    private var isClickAllowed = true
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
@@ -136,7 +135,7 @@ class SearchActivity : AppCompatActivity() {
         historyRecycler.adapter = historyAdapter
 
         historyAdapter.onItemClick = { track ->
-            if (clickDebounce()) { // добавляем проверку и сюда
+            if (clickDebounce()) {
                 openPlayer(track)
                 historyStorage.addTrack(track)
                 historyAdapter.update(historyStorage.getHistory())
@@ -254,7 +253,7 @@ class SearchActivity : AppCompatActivity() {
 
         placeholderImage.setImageResource(R.drawable.placeholder_internet_error)
         placeholderText.text = "Загрузка не удалась.\nПроверьте подключение к интернету"
-        placeholderText.setLineSpacing(16f, 1f) // добавляет расстояние между строками
+        placeholderText.setLineSpacing(16f, 1f)
 
         refreshButton.visibility = View.VISIBLE
         refreshButton.setOnClickListener {

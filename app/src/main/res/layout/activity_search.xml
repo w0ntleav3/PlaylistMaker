@@ -155,7 +155,7 @@
                 style="@style/Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ничего не нашлось"
+                android:text="@string/no_result"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/text_size_16sp"
                 android:gravity="center"

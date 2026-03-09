@@ -28,9 +28,8 @@ class PlaylistsFragment : Fragment() {
     private lateinit var db: AppDatabase
 
     private val playlistsList = mutableListOf<Playlist>()
-    // добавляем лямбду в конце
+
     private val adapter = PlaylistsAdapter(playlistsList) { playlist ->
-        // здесь будет логика открытия плейлиста, а пока просто лог
         Log.d("PlaylistsFragment", "нажали на: ${playlist.name}")
     }
 
@@ -47,7 +46,6 @@ class PlaylistsFragment : Fragment() {
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.recyclerView.adapter = adapter
 
-        // ОСТАВЛЯЕМ ТОЛЬКО ОДНУ ПОДПИСКУ
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 db.playlistDao().getAllPlaylists().collectLatest { entities ->
@@ -59,7 +57,6 @@ class PlaylistsFragment : Fragment() {
         }
 
         binding.btnNewPlaylist.setOnClickListener {
-            // Используем commit() для перехода
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, NewPlaylistFragment.newInstance())
                 .addToBackStack(null)

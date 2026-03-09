@@ -16,11 +16,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.room.Room
 import com.example.playlistmaker.databinding.FragmentNewPlaylistBinding
 import com.example.playlistmaker.db.AppDatabase
 import com.example.playlistmaker.db.PlaylistEntity
+import com.example.playlistmaker.db.PlaylistTrackEntity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
@@ -31,8 +32,6 @@ class NewPlaylistFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var imageUri: Uri? = null
-
-    // База данных без Koin
     private lateinit var db: AppDatabase
 
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -51,6 +50,11 @@ class NewPlaylistFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         db = AppDatabase.getInstance(requireContext())
+
+        // достаем трек по константе
+        val trackJson = arguments?.getString(TRACK_KEY)
+        val trackToAdd = trackJson?.let { Gson().fromJson(it, Track::class.java) }
+
         binding.btnCreate.isEnabled = false
 
         binding.playlistCover.setOnClickListener {
@@ -68,27 +72,46 @@ class NewPlaylistFragment : Fragment() {
             lifecycleScope.launch {
                 val savedImagePath = imageUri?.let { saveImageToInternalStorage(it) }
 
+                // если трек есть, сразу ставим счетчик 1
+                val initialCount = if (trackToAdd != null) 1 else 0
+
                 val newPlaylist = PlaylistEntity(
                     name = name,
                     description = description,
                     imagePath = savedImagePath,
-                    tracksCount = 0
+                    tracksCount = initialCount
                 )
 
-                db.playlistDao().insertPlaylist(newPlaylist)
-                Log.d("NewPlaylistFragment", "Inserted playlist: $name")
+                // сохраняем и получаем ID
+                val newPlaylistId = db.playlistDao().insertPlaylist(newPlaylist)
 
-                Toast.makeText(requireContext(), "плейлист $name создан", Toast.LENGTH_SHORT).show()
+                trackToAdd?.let { track ->
+                    // привязываем трек к новому плейлисту
+                    db.playlistDao().addTrackToPlaylist(
+                        PlaylistTrackEntity(
+                            playlistId = newPlaylistId.toInt(),
+                            trackId = track.trackId.toInt()
+                        )
+                    )
+                    Toast.makeText(requireContext(), "добавлено в плейлист $name", Toast.LENGTH_SHORT).show()
+                }
+
+                if (trackToAdd == null) {
+                    Toast.makeText(requireContext(), "плейлист $name создан", Toast.LENGTH_SHORT).show()
+                }
+
                 parentFragmentManager.popBackStack()
             }
         }
 
+        // обработка кнопки назад
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 confirmExit()
             }
         })
 
+        // кнопка назад в тулбаре
         binding.toolbar.setNavigationOnClickListener {
             confirmExit()
         }
@@ -111,7 +134,11 @@ class NewPlaylistFragment : Fragment() {
     }
 
     private fun confirmExit() {
-        if (imageUri != null || binding.etPlaylistName.text?.isNotEmpty() == true || binding.etPlaylistDescription.text?.isNotEmpty() == true) {
+        val hasContent = imageUri != null ||
+                binding.etPlaylistName.text?.isNotEmpty() == true ||
+                binding.etPlaylistDescription.text?.isNotEmpty() == true
+
+        if (hasContent) {
             MaterialAlertDialogBuilder(requireContext(), R.style.AlertDialogTheme)
                 .setTitle("Завершить создание плейлиста?")
                 .setMessage("Все несохраненные данные будут потеряны")
@@ -129,6 +156,14 @@ class NewPlaylistFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() = NewPlaylistFragment()
+        private const val TRACK_KEY = "track_to_add"
+
+        fun newInstance(track: Track? = null) = NewPlaylistFragment().apply {
+            arguments = Bundle().apply {
+                if (track != null) {
+                    putString(TRACK_KEY, Gson().toJson(track))
+                }
+            }
+        }
     }
 }

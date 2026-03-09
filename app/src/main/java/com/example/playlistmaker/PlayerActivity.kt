@@ -34,7 +34,6 @@ class PlayerActivity : AppCompatActivity() {
     private var playerState = STATE_DEFAULT
     private val handler = Handler(Looper.getMainLooper())
 
-    // runnable для обновления текста с текущим временем проигрывания
     private val updateTimeRunnable = object : Runnable {
         override fun run() {
             if (playerState == STATE_PLAYING) {
@@ -64,13 +63,12 @@ class PlayerActivity : AppCompatActivity() {
 
         db = AppDatabase.getInstance(this)
 
-        // проверяем, в избранном ли трек (нужны корутины)
+        // проверяем, в избранном ли трек
         lifecycleScope.launch {
             isFavorite = db.favoriteTracksDao().isFavorite(track.trackId)
-            setFavoriteButtonIcon(isFavorite) // меняем иконку сразу
+            setFavoriteButtonIcon(isFavorite) // меняем иконку
         }
 
-        // слушатель на кнопку сердечка
         binding.favoriteButton.setOnClickListener {
             onFavoriteClicked(track)
         }
@@ -110,7 +108,6 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun preparePlayer(previewUrl: String?) {
-        android.util.Log.d("PLAYER_DEBUG", "Preview URL: $previewUrl")
         if (previewUrl.isNullOrEmpty()) return
         mediaPlayer.setDataSource(previewUrl)
         mediaPlayer.prepareAsync()
@@ -163,7 +160,6 @@ class PlayerActivity : AppCompatActivity() {
                 db.favoriteTracksDao().deleteTrack(track)
                 isFavorite = false
             } else {
-                // создаем копию трека с актуальным временем добавления
                 val favoriteTrack = track.copy(addTime = System.currentTimeMillis())
                 db.favoriteTracksDao().insertTrack(favoriteTrack)
                 isFavorite = true

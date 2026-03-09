@@ -27,13 +27,13 @@ class SearchHistoryStorage(context: Context) {
     fun addTrack(track: Track) {
         val history = getHistory()
 
-        // 1. удаляем, если трек уже есть
+        // удаляем, если трек уже есть
         history.removeAll { it.trackId == track.trackId }
 
-        // 2. добавляем в начало
+        // добавляем в начало
         history.add(0, track)
 
-        // 3. обрезаем до 10
+        // обрезаем до 10
         if (history.size > 10) {
             history.removeAt(history.size - 1)
         }

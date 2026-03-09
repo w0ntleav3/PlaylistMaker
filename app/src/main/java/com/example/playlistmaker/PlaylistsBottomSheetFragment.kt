@@ -22,19 +22,39 @@ class PlaylistsBottomSheetFragment : BottomSheetDialogFragment() {
 
     private var _binding: FragmentPlaylistsBottomSheetBinding? = null
     private val binding get() = _binding!!
-
-    // передаем данные через bundle или напрямую (для учебного проекта сойдет)
     private lateinit var track: Track
     private lateinit var db: AppDatabase
 
+
+    override fun getTheme(): Int = R.style.AppBottomSheetDialogTheme
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val json = requireArguments().getString(TRACK_KEY)
         track = Gson().fromJson(json, Track::class.java)
     }
-    private val adapter = PlaylistsAdapter(mutableListOf()) { playlist ->
+    private val adapter = PlaylistsAdapter(mutableListOf(), isGridView = false) { playlist ->
         onPlaylistClicked(playlist)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val dialog = dialog as? com.google.android.material.bottomsheet.BottomSheetDialog
+        val bottomSheet = dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+
+        bottomSheet?.let {
+            val behavior = com.google.android.material.bottomsheet.BottomSheetBehavior.from(it)
+
+
+            val displayMetrics = requireContext().resources.displayMetrics
+            val height = (displayMetrics.heightPixels * 0.5).toInt()
+            bottomSheet.layoutParams.height = height
+
+
+            it.layoutParams.height = height
+            behavior.state = com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+            behavior.peekHeight = height
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -45,20 +65,21 @@ class PlaylistsBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // инициализируем всё
-        db = Room.databaseBuilder(requireContext().applicationContext, AppDatabase::class.java, "database.db").build()
+        db = AppDatabase.getInstance(requireContext())
 
         binding.playlistsRecyclerBottom.layoutManager = LinearLayoutManager(requireContext())
 
         binding.playlistsRecyclerBottom.adapter = adapter
 
         binding.btnNewPlaylistBottom.setOnClickListener {
-            // открываем экран создания
+            val containerId = if (requireActivity() is MainActivity) R.id.fragment_container else android.R.id.content
+
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, NewPlaylistFragment.newInstance())
+                .replace(containerId, NewPlaylistFragment.newInstance(track)) // ПЕРЕДАЕМ ТРЕК
                 .addToBackStack(null)
                 .commit()
-            dismiss() // закрываем шторку
+
+            dismiss()
         }
 
         loadPlaylists()
@@ -67,7 +88,7 @@ class PlaylistsBottomSheetFragment : BottomSheetDialogFragment() {
     private fun loadPlaylists() {
         lifecycleScope.launch {
             db.playlistDao().getAllPlaylists().collect { list ->
-                // тут используй свой маппер из entities в модели
+
                 adapter.updateData(list.map { mapEntityToPlaylist(it) })
             }
         }
@@ -85,35 +106,28 @@ class PlaylistsBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun onPlaylistClicked(playlist: Playlist) {
         lifecycleScope.launch {
-
             val exists = db.playlistDao().isTrackInPlaylist(
                 playlist.id,
                 track.trackId.toInt()
             )
 
             if (exists) {
-
-                Toast.makeText(
-                    context,
-                    "Трек уже добавлен в плейлист ${playlist.name}",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                Toast.makeText(context, "Трек уже добавлен в плейлист ${playlist.name}", Toast.LENGTH_SHORT).show()
             } else {
-
                 db.playlistDao().addTrackToPlaylist(
-                    PlaylistTrackEntity(
-                        playlistId = playlist.id,
-                        trackId = track.trackId.toInt()
-                    )
+                    PlaylistTrackEntity(playlistId = playlist.id, trackId = track.trackId.toInt())
                 )
 
-                Toast.makeText(
-                    context,
-                    "Добавлено в плейлист ${playlist.name}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                val updatedEntity = PlaylistEntity(
+                    id = playlist.id,
+                    name = playlist.name,
+                    description = playlist.description,
+                    imagePath = playlist.imagePath,
+                    tracksCount = playlist.tracksCount + 1
+                )
+                db.playlistDao().updatePlaylist(updatedEntity)
 
+                Toast.makeText(context, "Добавлено в плейлист ${playlist.name}", Toast.LENGTH_SHORT).show()
                 dismiss()
             }
         }

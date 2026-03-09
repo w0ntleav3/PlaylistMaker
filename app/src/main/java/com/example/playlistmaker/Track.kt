@@ -21,8 +21,7 @@ data class Track(
     @SerializedName("previewUrl")
     val previewUrl: String?,
 
-    // Поле для сортировки: сохраняем время добавления
-    // По умолчанию ставим текущее время
+
     val addTime: Long = System.currentTimeMillis()
 ) : Serializable {
     fun getCoverArtwork(): String = artworkUrl100.replaceAfterLast('/', "512x512bb.jpg")
