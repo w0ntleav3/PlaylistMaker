@@ -35,5 +35,7 @@
     <string name="player_stub_artist_name">Artist Name</string>
     <string name="player_stub_time">0:00</string>
 
-
+    Ваша медиатека пуста
+    <string name="no_playlists">Вы ещё не создали ни одного плейлиста</string>
+    <string name="no_tracks_in_media">Ваша медиатека пуста</string>
 </resources>

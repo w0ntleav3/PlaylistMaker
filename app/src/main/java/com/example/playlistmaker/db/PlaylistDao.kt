@@ -1,0 +1,25 @@
+package com.example.playlistmaker.db
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.example.playlistmaker.db.PlaylistEntity
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface PlaylistDao {
+    @Insert
+    suspend fun insertPlaylist(playlist: PlaylistEntity)
+
+    @Query("SELECT * FROM playlist_table ORDER BY id DESC")
+    fun getAllPlaylists(): Flow<List<PlaylistEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addTrackToPlaylist(link: PlaylistTrackEntity)
+
+    @Query("SELECT EXISTS(SELECT 1 FROM playlist_track_table WHERE playlistId = :playlistId AND trackId = :trackId)")
+    suspend fun isTrackInPlaylist(
+        playlistId: Int,
+        trackId: Int
+    ): Boolean
+}

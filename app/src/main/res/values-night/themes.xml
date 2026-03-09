@@ -1,9 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Base.Theme.PlaylistMaker" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorBackground">@color/colorBackground</item>
+        <item name="colorSurface">@color/colorBackground</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorText">@color/colorText</item>          <!-- светлый текст -->
+        <item name="colorText">@color/colorText</item>
         <item name="colorTextSecondary">@color/colorTextSecondary</item>
-        <item name="colorBackgroundMain">@color/colorBackgroundMain</item>  <!-- темный фон -->
-        <item name="colorButtonText">@color/colorWhite</item>  <!-- текст на кнопках -->
+        <item name="colorBackgroundMain">@color/colorBackgroundMain</item>
+        <item name="colorButtonText">@color/colorWhite</item>
     </style>
 </resources>

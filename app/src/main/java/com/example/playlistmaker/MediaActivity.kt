@@ -1,16 +1,32 @@
 package com.example.playlistmaker
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.playlistmaker.databinding.ActivityMediaBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 class MediaActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMediaBinding
+    private lateinit var mediator: TabLayoutMediator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_media)
+        binding = ActivityMediaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        findViewById<View>(R.id.btn_back_from_media).setOnClickListener {
-            finish()
+        val adapter = MediaViewPagerAdapter(supportFragmentManager, lifecycle)
+        binding.viewPager.adapter = adapter
+
+        mediator = TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = if (position == 0) "Избранные треки" else "Плейлисты"
         }
+        mediator.attach()
+        binding.btnBackFromMedia.setOnClickListener { finish() }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediator.detach()
     }
 }

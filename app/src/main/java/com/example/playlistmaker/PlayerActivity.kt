@@ -6,16 +6,21 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.databinding.ActivityPlayerBinding
+import com.example.playlistmaker.db.AppDatabase
 import com.example.playlistmaker.utils.formatTrackTime
 import com.google.gson.Gson
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class PlayerActivity : AppCompatActivity() {
-
+    private var isFavorite: Boolean = false
+    private lateinit var db: AppDatabase
     companion object {
         private const val STATE_DEFAULT = 0
         private const val STATE_PREPARED = 1
@@ -55,6 +60,24 @@ class PlayerActivity : AppCompatActivity() {
 
         binding.playButton.setOnClickListener {
             playbackControl()
+        }
+
+        db = AppDatabase.getInstance(this)
+
+        // проверяем, в избранном ли трек (нужны корутины)
+        lifecycleScope.launch {
+            isFavorite = db.favoriteTracksDao().isFavorite(track.trackId)
+            setFavoriteButtonIcon(isFavorite) // меняем иконку сразу
+        }
+
+        // слушатель на кнопку сердечка
+        binding.favoriteButton.setOnClickListener {
+            onFavoriteClicked(track)
+        }
+
+        binding.addToPlaylistButton.setOnClickListener {
+            val bottomSheet = PlaylistsBottomSheetFragment.newInstance(track)
+            bottomSheet.show(supportFragmentManager, "playlists_sheet")
         }
     }
 
@@ -132,5 +155,29 @@ class PlayerActivity : AppCompatActivity() {
         super.onDestroy()
         handler.removeCallbacks(updateTimeRunnable)
         mediaPlayer.release()
+    }
+
+    private fun onFavoriteClicked(track: Track) {
+        lifecycleScope.launch {
+            if (isFavorite) {
+                db.favoriteTracksDao().deleteTrack(track)
+                isFavorite = false
+            } else {
+                // создаем копию трека с актуальным временем добавления
+                val favoriteTrack = track.copy(addTime = System.currentTimeMillis())
+                db.favoriteTracksDao().insertTrack(favoriteTrack)
+                isFavorite = true
+            }
+            setFavoriteButtonIcon(isFavorite)
+        }
+    }
+
+    private fun setFavoriteButtonIcon(isFavorite: Boolean) {
+        val imageResource = if (isFavorite) {
+            R.drawable.ic_favourite_checked // подсвеченное сердечко
+        } else {
+            R.drawable.ic_favourite // контур
+        }
+        binding.favoriteButton.setImageResource(imageResource)
     }
 }

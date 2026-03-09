@@ -9,7 +9,8 @@ import com.example.playlistmaker.R
 import com.example.playlistmaker.Track
 import com.example.playlistmaker.utils.formatTrackTime
 
-class TrackAdapter(private val tracks: MutableList<Track>) :
+class TrackAdapter(val tracks: MutableList<Track> = mutableListOf()) :
+
     RecyclerView.Adapter<TrackAdapter.TrackViewHolder>() {
 
     var onItemClick: ((Track) -> Unit)? = null

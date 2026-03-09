@@ -13,6 +13,7 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorBlackWhite">#FFFFFF</color>
+    <color name="colorBlue">#3772E7</color>
 
     <color name="switch_thumb_color">#3772E7</color>
     <color name="switch_track_color">#3772E7</color>
